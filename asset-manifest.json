@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/Bank-system/static/css/main.93a0497a.css",
+    "main.js": "/Bank-system/static/js/main.90337c67.js",
+    "index.html": "/Bank-system/index.html",
+    "main.93a0497a.css.map": "/Bank-system/static/css/main.93a0497a.css.map",
+    "main.90337c67.js.map": "/Bank-system/static/js/main.90337c67.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.93a0497a.css",
+    "static/js/main.90337c67.js"
+  ]
+}
