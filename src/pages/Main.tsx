@@ -22,7 +22,6 @@ export default function Main() {
   };
 
   const open = Boolean(anchorEl);
-  const id = open ? 'simple-popover' : undefined;
 
   let borderStyle =
     notifications < 1 ? {} : { border: '3px solid blue', '&:hover': { border: '3px solid blue' } };
@@ -32,9 +31,9 @@ export default function Main() {
       autoHideDuration: 7000,
       style: { backgroundColor: '#b22a00' },
     });
-    setNotifications(1)
+    setNotifications(1);
   };
-  
+
   useEffect(() => {
     setTimeout(notify, 2000);
     console.log('useEffect');
@@ -54,7 +53,6 @@ export default function Main() {
           {notifications >= 1 && <span className="notifications-counter">{notifications}</span>}
         </Button>
         <Popover
-          id={id}
           open={open}
           anchorEl={anchorEl}
           onClose={closePopover}

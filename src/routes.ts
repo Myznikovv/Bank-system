@@ -22,6 +22,10 @@ export const privateRoutes = [
     path: '/admins',
     element: Admins,
   },
+  {
+    path: '/*',
+    element: Main,
+  },
 ];
 
 export const publicRoutes = [
@@ -32,5 +36,9 @@ export const publicRoutes = [
   {
     path: '/registration',
     element: Registration,
+  },
+  {
+    path: '/*',
+    element: Login,
   },
 ];

@@ -11,11 +11,6 @@ function App() {
       {isAuth
         ? privateRoutes.map(({path, element: Component}) => <Route path={path} element={<Component />} />)
         : publicRoutes.map(({path, element: Component}) => <Route path={path} element={<Component />} />)}
-      {isAuth ? (
-        <Route path="/*" element={privateRoutes[0].element()} />
-      ) : (
-        <Route path="/*" element={publicRoutes[0].element()} />
-      )}
     </Routes>
   );
 }
