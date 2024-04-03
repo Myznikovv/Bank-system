@@ -11,22 +11,14 @@ import {
   ListItemText,
   Typography,
 } from '@mui/material';
-import React, { useState } from 'react';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { incidents } from '../incidents';
+import React, { useMemo, useState } from 'react';
 import AddIcon from '@mui/icons-material/Add';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function IncidentList() {
-  const incidentExample = {
-    firstPriority: 'Высокий',
-    param: 'authorization_problem_access',
-    errors: 290,
-    creationDate: '27.03.2024',
-    decisionTargetDate: '01.04.2024',
-    admin: 'Сиборомин А.В.',
-    service: 'Service name',
-    connectedIncidents: [],
-    secondPriority: '',
-  };
+  const navigate = useNavigate();
 
   const [selectedIndexFirst, setSelectedIndexFirst] = useState<number>(0);
   const [selectedIndexSecond, setSelectedIndexSecond] = useState<number>(-1);
@@ -48,9 +40,22 @@ export default function IncidentList() {
     setSelectedIndexSecond(selectedIndexSecond === index ? -1 : index);
   };
 
+  const selectedList = useMemo(() => {
+    return incidents.filter(
+      (incident) =>
+        incident.firstPriority === firstPriority[selectedIndexFirst] &&
+        (selectedIndexSecond !== -1
+          ? incident.secondPriority === secondPriority[selectedIndexSecond]
+          : true),
+    );
+  }, [selectedIndexFirst, selectedIndexSecond]);
+
   return (
-    <Box>
-      <Typography variant="h3" sx={{ textAlign: 'center', p: 3 }}>
+    <Box p={5}>
+      <Button startIcon={<ArrowBackIcon />} variant="outlined" onClick={() => navigate(-1)}>
+        Назад
+      </Button>
+      <Typography variant="h3" sx={{ textAlign: 'center', marginBottom: 6 }}>
         Список инцидентов
       </Typography>
       <Box
@@ -63,7 +68,6 @@ export default function IncidentList() {
             border: '1px solid gray',
             borderRadius: 2,
             width: '300px',
-            m: 3,
           }}>
           <List>
             <ListItem>
@@ -118,29 +122,30 @@ export default function IncidentList() {
           </List>
         </Box>
 
-        {selectedIndexFirst === 2 && (
+        {selectedList.map((incident) => (
           <Card
+          key={incident.id}
             sx={{
-              marginTop: 3,
+              marginTop: 1,
               width: '230px',
               height: '190px',
             }}>
             <CardContent>
               <Typography variant="h4">Пример</Typography>
               <Typography variant="body2" color="text.secondary">
-                Кол-во ошибок: {incidentExample.errors}
+                Кол-во ошибок: {incident.errors}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                Параметр: {incidentExample.param}
+                Параметр: {incident.param}
               </Typography>
             </CardContent>
             <CardActions>
-              <Link to="/incidents/incident_card">
+              <Link to={"/incidents/incident_card/" + incident.id}>
                 <Button>Открыть</Button>
               </Link>
             </CardActions>
           </Card>
-        )}
+        ))}
       </Box>
     </Box>
   );

@@ -15,7 +15,7 @@ export const privateRoutes = [
     element: IncidentList,
   },
   {
-    path: '/incidents/incident_card',
+    path: '/incidents/incident_card/:id',
     element: IncidentCard,
   },
   {

@@ -1,10 +1,21 @@
 import React from 'react';
 import { Button, Stack, TextField, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 export default function Registration() {
+  const navigate = useNavigate();
+
   return (
-    <Stack p={16} alignItems={'center'} spacing={4}>
+    <Stack p={12} alignItems={'center'} spacing={4}>
+      <Button
+        startIcon={<ArrowBackIcon />}
+        variant="outlined"
+        onClick={() => navigate(-1)}
+        sx={{ position: 'absolute', top: 36, left: 36 }}>
+        Назад
+      </Button>
+
       <Typography variant="h3" mb={3}>
         Регистрация
       </Typography>
