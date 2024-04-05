@@ -5,11 +5,12 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useSnackbar } from 'notistack';
 import '../index.css';
 import { Link } from 'react-router-dom';
+import { incidents } from '../incidents';
 
 export default function Main() {
   const { enqueueSnackbar } = useSnackbar();
   const notificationText =
-    'Здравствуйте! По функциональной подсистеме «пример» превышено количество ошибок (250), зарегистрирован инцидент с приоритетом «Высокий», можете просмотреть его в «Список инцидентов», Приоритет: Высокий';
+    `Здравствуйте! По функциональной подсистеме «${incidents[5].name}» превышено количество ошибок (250), зарегистрирован инцидент с приоритетом «Высокий», можете просмотреть его в «Список инцидентов», Приоритет: Высокий`;
   const [notifications, setNotifications] = useState<number>(0);
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
 
