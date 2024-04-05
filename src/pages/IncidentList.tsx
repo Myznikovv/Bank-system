@@ -15,10 +15,13 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { incidents } from '../incidents';
 import React, { useMemo, useState } from 'react';
 import AddIcon from '@mui/icons-material/Add';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 export default function IncidentList() {
   const navigate = useNavigate();
+  const location = useLocation().pathname;
+  const idToAdd = location.length > 10 ? Number(location.slice(17)) : 0;
+  const selectedIncident: any = incidents.find((incident) => incident.id === idToAdd);
 
   const [selectedIndexFirst, setSelectedIndexFirst] = useState<number>(0);
   const [selectedIndexSecond, setSelectedIndexSecond] = useState<number>(-1);
@@ -46,13 +49,14 @@ export default function IncidentList() {
         incident.firstPriority === firstPriority[selectedIndexFirst] &&
         (selectedIndexSecond !== -1
           ? incident.secondPriority === secondPriority[selectedIndexSecond]
-          : true),
+          : true) &&
+        (idToAdd ? (incident.id !== idToAdd) && !selectedIncident.connectedIncidents.includes(incident.name) : true),
     );
   }, [selectedIndexFirst, selectedIndexSecond]);
 
   return (
     <Box p={5}>
-      <Button startIcon={<ArrowBackIcon />} variant="outlined" onClick={() => navigate(-1)}>
+      <Button startIcon={<ArrowBackIcon />} variant="outlined" onClick={() => navigate('/')}>
         Назад
       </Button>
       <Typography variant="h3" sx={{ textAlign: 'center', marginBottom: 6 }}>
@@ -124,14 +128,14 @@ export default function IncidentList() {
 
         {selectedList.map((incident) => (
           <Card
-          key={incident.id}
+            key={incident.id}
             sx={{
               marginTop: 1,
               width: '230px',
               height: '190px',
             }}>
             <CardContent>
-              <Typography variant="h4">Пример</Typography>
+              <Typography variant="h4">{incident.name}</Typography>
               <Typography variant="body2" color="text.secondary">
                 Кол-во ошибок: {incident.errors}
               </Typography>
@@ -140,8 +144,14 @@ export default function IncidentList() {
               </Typography>
             </CardContent>
             <CardActions>
-              <Link to={"/incidents/incident_card/" + incident.id}>
-                <Button>Открыть</Button>
+              <Link to={'/incidents/incident_card/' + (idToAdd ? idToAdd : incident.id)}>
+                {idToAdd ? (
+                  <Button onClick={() => selectedIncident.connectedIncidents.push(incident.name)}>
+                    Добавить
+                  </Button>
+                ) : (
+                  <Button>Открыть</Button>
+                )}
               </Link>
             </CardActions>
           </Card>
